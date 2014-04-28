@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+branch=$1
+test -z $branch && echo "branch required." 1>&2 && exit 1
+
+if git show-ref --verify --quiet "refs/heads/$branch"; then
+  echo "-- Review $branch"
+
+  if [ -f "./tmp/pids/server.pid" ]; then
+    echo "-- Stopping running rails server..."
+    kill `cat ./tmp/pids/server.pid`
+  fi
+  
+  echo "-- Checking out branch"
+
+  git fetch
+  git checkout $branch
+  git pull
+  
+  echo "-- Setting up app"
+
+  bundle
+  bundle exec rake rebuild
+
+  echo "-- Starting rails server"
+  rails s -d
+else
+  echo -e "No such branch '$branch'. Listing branches: \n"
+  git branch -a
+  exit 1
+fi

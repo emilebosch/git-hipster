@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+current=`git rev-parse --abbrev-ref HEAD`
+git checkout master
+git pull
+git checkout $current
+git rebase master
