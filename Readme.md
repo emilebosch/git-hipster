@@ -9,6 +9,8 @@ Still pretty beta, don't know unless you know what you're doing.
 
 ## Installing
 
+Just add the bin of this directory to a `$PATH` in `.bash-rc.`
+
 ## Commands
 
 ### Working and merging
