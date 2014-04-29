@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
-current=`git rev-parse --abbrev-ref HEAD`
-git checkout master
-git pull
-git checkout $current
-git rebase master
+branch=${1:-`git rev-parse --abbrev-ref HEAD`}
+if git show-ref --verify --quiet "refs/heads/$branch"; then
+  git checkout master && git pull
+  git checkout $branch
+  git rebase master
+else
+  echo "No such branch. "
+  git branch -a  
+fi
