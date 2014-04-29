@@ -1,0 +1,21 @@
+#!/bin/bash
+echo -e "Local branches behind local master (To be synced with master) \n"
+
+for branch in $(git for-each-ref --format='%(refname)' refs/heads/); do
+  git rev-list --left-right $branch...master -- 2>/dev/null >/tmp/git_upstream_status_delta
+  RIGHT_AHEAD=$(grep -c '^>' /tmp/git_upstream_status_delta) 
+  if test $RIGHT_AHEAD != 0; then
+  echo "-- ${branch:11} ($RIGHT_AHEAD)" 
+  fi
+done
+
+echo -e "\nRemote branches behind remote master (PR's to be synced) \n"
+
+for branch in $(git for-each-ref --format='%(refname)' refs/remotes/); do
+  git rev-list --left-right $branch...origin/master -- 2>/dev/null >/tmp/git_upstream_status_delta
+  RIGHT_AHEAD=$(grep -c '^>' /tmp/git_upstream_status_delta) 
+  if test $RIGHT_AHEAD != 0; then
+  echo "-- ${branch:13} ($RIGHT_AHEAD)" 
+  fi
+done
+
