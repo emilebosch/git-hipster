@@ -8,4 +8,3 @@ else
   echo "No branch. "
   git branch -a
 fi
-

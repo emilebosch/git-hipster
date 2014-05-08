@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 branch="$1"
-if git show-ref --verify --quiet "refs/heads/$branch"; then
+exist_branch=$(git show-ref "$branch")
+if [ -n "$exist_branch" ]; then
   echo "-- Review $branch"
 
   if [ -f "./tmp/pids/server.pid" ]; then
