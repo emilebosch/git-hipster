@@ -1,5 +1,5 @@
-# TODO
-# TODO
+# `git sync`
+# Rebases current branch with master
 #
 #!/usr/bin/env bash
 branch=${1:-`git rev-parse —abbrev-ref HEAD`} #given branch or current

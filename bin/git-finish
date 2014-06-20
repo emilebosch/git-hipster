@@ -1,4 +1,4 @@
-# `git finish <feature>`
+# `git finish [feature]`
 # Rebases the feature from master, checks out master `--no-ff` the feature.
 #
 #!/usr/bin/env bash

@@ -1,5 +1,5 @@
-# TODO
-# TODO
+# `git review <branch>` 
+# Starts the review process for a branch. Looks for `hooks/review` to execute review tasks.
 #
 #!/usr/bin/env bash
 branch="$1"
