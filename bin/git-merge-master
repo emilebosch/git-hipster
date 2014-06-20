@@ -2,10 +2,10 @@
 # Merges current branch in master with a ``-no-ff`
 #!/usr/bin/env bash
 branch=${1:-`git rev-parse —abbrev-ref HEAD`}
-if git show-ref —verify —quiet "refs/heads/$branch"; then
+if git show-ref --verify --quiet "refs/heads/$branch"; then
   git checkout master
   git pull
-  git merge —no-ff $branch
+  git merge -—no-ff $branch
 else
   echo "No branch. "
   git branch -a
