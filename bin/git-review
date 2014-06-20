@@ -1,28 +1,29 @@
 # TODO
 # TODO
+#
 #!/usr/bin/env bash
 branch="$1"
 exist_branch=$(git show-ref "$branch")
 if [ -n "$exist_branch" ]; then
-  echo "-- Review $branch"
+  echo "— Review $branch"
 
   if [ -f "./tmp/pids/server.pid" ]; then
-    echo "-- Stopping running rails server..."
+    echo "— Stopping running rails server..."
     kill `cat ./tmp/pids/server.pid`
   fi
   
-  echo "-- Checking out branch"
+  echo "— Checking out branch"
 
   git fetch
   git checkout $branch
   git pull
   
-  echo "-- Setting up app"
+  echo "— Setting up app"
 
   bundle
   bundle exec rake rebuild
 
-  echo "-- Starting rails server"
+  echo "— Starting rails server"
   rails s -d
 else
   echo -e "No such branch. Listing branches: \n"

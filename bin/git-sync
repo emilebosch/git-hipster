@@ -1,8 +1,9 @@
 # TODO
 # TODO
+#
 #!/usr/bin/env bash
-branch=${1:-`git rev-parse --abbrev-ref HEAD`} #given branch or current
-if git show-ref --verify --quiet "refs/heads/$branch"; then
+branch=${1:-`git rev-parse —abbrev-ref HEAD`} #given branch or current
+if git show-ref —verify —quiet "refs/heads/$branch"; then
   git checkout master && git pull
   git checkout $branch
   git rebase master
