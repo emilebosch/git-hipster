@@ -1,0 +1,8 @@
+# git finish <feature>
+# Merges a feature branch into master
+#!/usr/bin/env bash
+branch=${1:-`git rev-parse --abbrev-ref HEAD`} #given branch or current
+! git show-ref --verify --quiet "refs/heads/$branch" && echo "branch doesnt exist" 1>&2 && exit 1
+git rebase master
+git checkout master
+git merge --no-ff $branch && git branch -D $branch

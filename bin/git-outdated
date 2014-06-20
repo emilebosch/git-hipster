@@ -1,4 +1,6 @@
-#!/bin/bash
+# TODO
+# TODO
+#!/usr/bin/env bash
 echo -e "Local branches behind local master - To be synced with master. \n"
 
 for branch in $(git for-each-ref --format='%(refname)' refs/heads/); do

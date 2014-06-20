@@ -1,0 +1,5 @@
+# git feat <feature>
+# Switches or creates a feature branch with feature/<name> from master
+#!/usr/bin/env bash
+test -z $1 && echo "name required" 1>&2 && exit 1
+git checkout master && (git checkout "feature/$1" || git checkout -b "feature/$1")

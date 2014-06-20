@@ -1,3 +1,4 @@
+# git fixup 
+# Adds and ammends the current data
 #!/usr/bin/env bash
-git add . 
-git commit -a --amend
+git add .  && git commit -a --amend

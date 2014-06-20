@@ -1,0 +1,7 @@
+# git ipsum [whatever]
+# Generates faux data to a file and commits, handy for showing of git
+#!/usr/bin/env bash
+ipsum=${@:-"Lorem ipsum"}
+echo $ipsum >> IPSUM
+git add IPSUM
+git commit -am "$ipsum"
