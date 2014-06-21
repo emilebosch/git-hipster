@@ -6,6 +6,4 @@ branch=${1:-`git rev-parse --abbrev-ref HEAD`} #given branch or current
 test $branch = "master" && echo "cowardly not finishing master" 1>&2 && exit 1
 
 ! git show-ref —-verify --quiet "refs/heads/$branch" && echo "branch $branch doesnt exist" 1>&2 && exit 1
-git rebase master
-git checkout master
-git merge --no-ff $branch && git branch -D $branch
+git rebase master && git checkout master && git merge --no-ff $branch && git branch -D $branch
