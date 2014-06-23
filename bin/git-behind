@@ -1,5 +1,5 @@
-# `git outdated`
-# Shows any outdated branches (i.e. branches that still need to be rebased with master)
+# `git behind`
+# Shows any behind/outdated branches (i.e. branches that still need to be rebased with master)
 #
 #!/usr/bin/env bash
 echo "Local branches behind local master - To be synced with master. \n"
