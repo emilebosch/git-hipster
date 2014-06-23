@@ -1,9 +1,10 @@
 # `git review <branch>` 
-# Starts the review process for a branch. Looks for `hooks/review` to execute review tasks.
+# Starts the review process for a branch. WARNING: This drops, created, migrates and seeds your database.
 #
 #!/usr/bin/env bash
 branch="$1"
 exist_branch=$(git show-ref "$branch")
+
 if [ -n "$exist_branch" ]; then
   echo "— Review $branch"
 
@@ -21,12 +22,12 @@ if [ -n "$exist_branch" ]; then
   echo "— Setting up app"
 
   bundle
-  bundle exec rake rebuild
+  bundle exec rake db:drop db:create db:migrate db:seed
 
   echo "— Starting rails server"
   rails s -d
 else
-  echo -e "No such branch. Listing branches: \n"
+  echo "No such branch. Listing branches: \n"
   git branch -a
   exit 1
 fi
