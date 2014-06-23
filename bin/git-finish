@@ -5,5 +5,15 @@
 branch=${1:-`git rev-parse --abbrev-ref HEAD`} #given branch or current
 test $branch = "master" && echo "cowardly not finishing master" 1>&2 && exit 1
 
+# check if we can finish the feature
+git rev-list --left-right $branch...master -- 2>/dev/null >/tmp/git_upstream_status_delta
+RIGHT_AHEAD=$(grep -c '^>' /tmp/git_upstream_status_delta) 
+if test $RIGHT_AHEAD != 0; then
+  a=$(git show -s --pretty="%h %an - %ar" `git show-ref -s $branch`)
+  echo "Can't finish you're $RIGHT_AHEAD commits behind master :( Run 'git sync' to rebase your feature branch with master"
+  exit 1
+fi
+
+# finally finish the feature
 ! git show-ref —-verify --quiet "refs/heads/$branch" && echo "branch $branch doesnt exist" 1>&2 && exit 1
 git rebase master && git checkout master && git merge --no-ff $branch && git branch -D $branch
