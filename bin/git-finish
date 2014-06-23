@@ -4,6 +4,7 @@
 #!/usr/bin/env bash
 branch=${1:-`git rev-parse --abbrev-ref HEAD`} #given branch or current
 test $branch = "master" && echo "cowardly not finishing master" 1>&2 && exit 1
+! git show-ref —-verify --quiet "refs/heads/$branch" && echo "branch $branch doesnt exist" 1>&2 && exit 1
 
 # check if we can finish the feature
 git rev-list --left-right $branch...master -- 2>/dev/null >/tmp/git_upstream_status_delta
@@ -15,5 +16,4 @@ if test $RIGHT_AHEAD != 0; then
 fi
 
 # finally finish the feature
-! git show-ref —-verify --quiet "refs/heads/$branch" && echo "branch $branch doesnt exist" 1>&2 && exit 1
 git rebase master && git checkout master && git merge --no-ff $branch && git branch -D $branch

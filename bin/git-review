@@ -1,33 +1,30 @@
 # `git review <branch>` 
-# Starts the review process for a branch. WARNING: This drops, created, migrates and seeds your database.
+# Starts the review process for a feature branch. WARNING: This drops, created, migrates and seeds your database.
 #
 #!/usr/bin/env bash
-branch="$1"
-exist_branch=$(git show-ref "$branch")
+branch=${1:-`git rev-parse --abbrev-ref HEAD`} #given branch or current
+! git show-ref —-verify --quiet "refs/heads/$branch" && echo "branch $branch doesnt exist" && git branch -a && 1>&2 && exit 1
 
-if [ -n "$exist_branch" ]; then
-  echo "— Review $branch"
+echo "— Review $branch"
 
+echo "— Checking out branch"
+
+git fetch
+git checkout $branch
+git pull
+
+echo "— Setting up app"
+
+bundle && bundle exec rake db:drop db:create db:migrate db:seed
+
+if [ -f "./tmp/restart.txt" ]; then
+  echo "Restarting pow..."
+  touch ./tmp/restart.txt
+else
   if [ -f "./tmp/pids/server.pid" ]; then
     echo "— Stopping running rails server..."
     kill `cat ./tmp/pids/server.pid`
   fi
-  
-  echo "— Checking out branch"
-
-  git fetch
-  git checkout $branch
-  git pull
-  
-  echo "— Setting up app"
-
-  bundle
-  bundle exec rake db:drop db:create db:migrate db:seed
-
-  echo "— Starting rails server"
+  echo "Starting rails server.."
   rails s -d
-else
-  echo "No such branch. Listing branches: \n"
-  git branch -a
-  exit 1
 fi
