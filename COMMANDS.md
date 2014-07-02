@@ -1,3 +1,7 @@
+#### ./bin/git-behind 
+`git behind`
+Shows any behind/outdated branches (i.e. branches that still need to be rebased with master)
+
 #### ./bin/git-feat 
 `git feat <feature>`
 Switches or creates a feature branch with `feature/[yourname]` from master
@@ -14,17 +18,19 @@ Adds and ammends the current data
 `git ipsum [whatever]`
 Generates faux data to a file and commits, handy for showing of git
 
+#### ./bin/git-lapse 
+`git ipsum [whatever]`
 #### ./bin/git-merge-master 
 `git merge-master` 
 Merges current branch in master with a ``-no-ff`
 
-#### ./bin/git-outdated 
-`git outdated`
-Shows any outdated branches (i.e. branches that still need to be rebased with master)
-
 #### ./bin/git-review 
 `git review <branch>` 
-Starts the review process for a branch. Looks for `hooks/review` to execute review tasks.
+Starts the review process for a feature branch. WARNING: This drops, created, migrates and seeds your database.
+
+#### ./bin/git-rollback 
+`git rollback`
+Rolls back a feature merge
 
 #### ./bin/git-sync 
 `git sync`

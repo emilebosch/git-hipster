@@ -1,0 +1,27 @@
+# `git rollback`
+# Rolls back a feature merge
+#
+#!/usr/bin/env bash
+die() {
+  echo $1
+  exit 1
+}
+
+test -z $1 && die "feature required"
+
+current=`git rev-parse --abbrev-ref HEAD`
+test "master" = "master" || die "not on master"
+
+msg=`git log -n 1 --format="%s"`
+test "$msg" = "Merge branch 'feature/$1'" || die "Last commit message is not matching :("
+
+echo "Rolling back.."
+hash=`git log -n 1 --skip 1 --format="%H"`
+
+git show-ref —-verify --quiet "refs/heads/feature/$1" && die "feature feature/$1 already exist"
+
+echo "all is fine"
+git branch feature/$1 $hash
+
+git reset --hard master~1
+git checkout feature/$1
