@@ -1,4 +1,4 @@
-# Git Helpers
+# Git Hipster
 
 Some git commands that make my life easier. With great power comes great responsibility. These utilites rewrite GIT history.
 Don't use if you don't know what you are doing.
