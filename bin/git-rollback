@@ -7,7 +7,7 @@ die() {
   exit 1
 }
 
-test -z $1 && die "feature required"
+test -z $1 && die "feature required i.e. add-tracking"
 
 current=`git rev-parse --abbrev-ref HEAD`
 test "master" = "master" || die "not on master"
@@ -20,7 +20,7 @@ hash=`git log -n 1 --skip 1 --format="%H"`
 
 git show-ref —-verify --quiet "refs/heads/feature/$1" && die "feature feature/$1 already exist"
 
-echo "all is fine"
+echo "All is fine"
 git branch feature/$1 $hash
 
 git reset --hard master~1

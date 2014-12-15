@@ -1,0 +1,60 @@
+#!/usr/bin/env ruby
+require 'time'
+require 'pp'
+
+objs = []
+
+committer = ARGV[0]
+a = `git log --author='#{committer}' --pretty=format:"%h%x09%an%x09%aD%x09%s" --all`
+a.split("\n").each do |f|
+  id, author, date, comment = f.split "\t"
+  objs << {
+    id: id,
+    author: author,
+    date: Time.rfc2822(date),
+    comment: comment,
+    line: f
+  }
+end
+
+authors = objs.group_by {|h|h[:author]}
+authors.each { |k,v|
+  puts "#{k}: #{v.count}"
+  ##c = "git log --author=\"#{k}\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\", add, subs, loc }' -" 
+  ##system(c)
+}
+puts "---"
+all = 0
+dates = objs.group_by {|h|h[:date].strftime("%a %d %b")}
+dates.each { |k,v|
+  puts "\n#{k}: #{v.count}"
+  a = v.sort_by { |k | k[:date]}
+  
+  last = nil
+  diff = 0
+  sum  = 0
+  day  = 0
+
+  a.each { |k|    
+    
+    if last != nil
+      diff = ((k[:date] - last) / 60).round 2
+    end
+
+    if diff && diff > 120
+      puts "\s\s- #{sum.round(2)}m\n\n"
+      diff = 0
+      sum  = 0
+    else 
+      sum += diff
+      day += diff
+      all += diff
+    end
+
+    puts "\s\s#{k[:date].strftime("%H:%M")} - #{k[:author]} - #{k[:comment]} #{diff >0 ? "+#{diff}m":""}"
+    last = k[:date]
+  }
+  puts "\s\s- #{sum.round(2)}m - #{(day / 60).round(2)}h"
+}
+
+  puts ">>>>> #{(all / 60).round(2)}h"
