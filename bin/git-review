@@ -13,7 +13,7 @@ git checkout $branch
 git pull
 
 echo "— Setting up app"
-bundle && bundle exec rake db:drop db:create db:migrate db:seed
+bundle && bundle exec rake rebuild:review
 
 if [ -f "./tmp/restart.txt" ]; then
   echo "Restarting pow..."
