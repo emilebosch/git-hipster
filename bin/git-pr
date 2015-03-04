@@ -1,0 +1,5 @@
+# `git pr`
+# Creates pull request of this branch (needs hub)
+#
+#!/usr/bin/env bash
+hub pull-request

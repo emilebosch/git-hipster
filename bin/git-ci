@@ -1,0 +1,5 @@
+# `git ci`
+# Shows ci status for this branch (needs hub)
+#
+#!/usr/bin/env bash
+hub ci-status

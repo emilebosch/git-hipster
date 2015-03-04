@@ -6,7 +6,6 @@ branch=${1:-`git rev-parse --abbrev-ref HEAD`} #given branch or current
 ! git show-ref —-verify --quiet "refs/heads/$branch" && echo "branch $branch doesnt exist" && git branch -a && 1>&2 && exit 1
 
 echo "— Review $branch"
-
 echo "— Checking out branch"
 
 git fetch
@@ -14,7 +13,6 @@ git checkout $branch
 git pull
 
 echo "— Setting up app"
-
 bundle && bundle exec rake db:drop db:create db:migrate db:seed
 
 if [ -f "./tmp/restart.txt" ]; then

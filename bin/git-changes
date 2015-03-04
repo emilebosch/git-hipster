@@ -1,0 +1,5 @@
+# `git changes`
+# Shows changes between master and the current branch
+#
+#!/usr/bin/env bash
+git log master..HEAD --oneline
