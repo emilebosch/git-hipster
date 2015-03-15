@@ -13,3 +13,4 @@ Check commands for commands:
 
 This is my test
 [COMMANDS.md](COMMANDS.md)
+This is my second test
