@@ -8,9 +8,7 @@ branch=${1:-`git rev-parse --abbrev-ref HEAD`} #given branch or current
 echo "— Review $branch"
 echo "— Checking out branch"
 
-git fetch
-git checkout $branch
-git pull
+git fetch && git checkout $branch && git pull
 
 echo "— Setting up app"
 bundle && bundle exec rake rebuild:review

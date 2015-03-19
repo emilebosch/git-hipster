@@ -1,0 +1,11 @@
+# `git upstream`
+# Add the upstream 
+#
+#!/usr/bin/env bash
+die() {
+  echo $1
+  exit 1
+}
+
+test -z $1 && die "ERROR: Please give upstream git repo"
+git remote add upstream $1

@@ -1,0 +1,11 @@
+# `git upstream`
+# Add the upstream 
+#
+#!/usr/bin/env bash
+die() {
+  echo $1
+  exit 1
+}
+
+git pull upstream master master
+git push origin master
